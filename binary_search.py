@@ -1,81 +1,30 @@
-class BinarySearchTree:
-    def __init__(self, data):
-        self.data = data
-        self.left = None
-        self.right = None
+def linear_search(number_list, number_to_find):
+    for index, elem in enumerate(number_list):
+        if elem == number_to_find:
+            return index
+    return -1
 
-    def add_child(self, data):
-        if data == self.data:
-            return
-        
-        if data < self.data:
-            if self.left:
-                self.left.add_child(data)
-            else:
-                self.left = BinarySearchTree(data)
+def binary_serach(number_list, number_to_find):
+    left = 0
+    right = len(number_list) - 1
+    mid = 0
+
+    while left <= right:
+        mid = (left + right) // 2
+        mid_number = number_list[mid]
+
+        if mid_number == number_to_find:
+            return mid
+
+        if mid_number < number_to_find:
+            left = mid + 1
         else:
-            if self.right:
-                self.right.add_child(data)
-            else:
-                self.right = BinarySearchTree(data)
-    
-    def in_order_traversal(self):
-        elements = []
-        #left tree
-        if self.left:
-            elements += self.left.in_order_traversal()
-        
-        #root node
-        elements.append(self.data)
+            right = mid - 1
 
-        #right tree
-        if self.right:
-            elements += self.right.in_order_traversal()
-        
-        return elements
-    
-    def search(self, value):
-        if self.data == value:
-            return True
-        
-        if value < self.data:
-            if self.left:
-                return self.left.search(value)
-            else:
-                return False
-        
-        if value > self.data:
-            if self.right:
-                return self.right.search(value)
-            else:
-                return False
-        
-    def find_max(self):
-        if self.right is None:
-            return self.data
-        return self.right.find_max()
-
-    def find_min(self):
-        if self.left is None:
-            return self.data
-        return self.left.find_min()
-        
-    
-def build_tree(elements):
-        root = BinarySearchTree(elements[0])
-
-        for i in range(1, len(elements)):
-            root.add_child(elements[i])
-        
-        return root
+    return -1 
 
 if __name__ == '__main__':
-    numbers = [17,98,12,34,87,96,68,2,4,1,6]
-    numbers_tree = build_tree(numbers)
-    print(numbers_tree.in_order_traversal())
-    print(numbers_tree.search(12))
-    print(numbers_tree.find_max())
-    print(numbers_tree.find_min())
-
-
-
+    number_list = [1, 2, 8, 12, 34, 56, 64, 67, 75, 98, 98, 102, 125]
+    number_to_find = 75
+    index = binary_serach(number_list, number_to_find)
+    print(f"Number found at {index}")
